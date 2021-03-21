@@ -121,15 +121,15 @@ class Player:
             f"{playerName}, would you like to play again? Y/N: ").lower()
         if replay == "y":
             os.system("cls")
-            Player.drawCards()
-            Player.playGame()
+            self.drawCards()
+            self.playGame()
         elif replay == "n":
             print(
                 f"Thank you for playing, {playerName}! Your final score is {self.Score}")
             sys.exit()
         else:
             print("Invalid Response. Please enter Y to play again, or N to exit")
-            Player.playAgain()
+            self.playAgain()
 
 
 Player = Player()
