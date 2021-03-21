@@ -1,5 +1,7 @@
 import random
 import os
+import instructions
+import argparse
 
 Cards = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9",
          "10", "J", "Q", "K"]
@@ -11,12 +13,12 @@ Deck = []
 discardPile = []
 
 
-def game_instructions():
-    "The computer will select a card at random, you as the player, need to guess whether the next drawn card is higher or lower than the selected card.  If your guess is correct, you will win a point, if you are incorrect, you will lose a point! Happy playing!"
-    print(game_instructions.__doc__)
-
-
-help(game_instructions)
+""" def openHelp():
+    text = input()
+    if text == "--help":
+        parser = argparse.ArgumentParser(
+            description="The computer will select a card at random, you as the player, need to guess whether the next drawn card is higher or lower than the selected card.  If your guess is correct, you will win a point, if you are incorrect, you will lose a point! Happy playing!")
+        parser.print_help() """
 
 
 def createDeck():
@@ -52,6 +54,14 @@ class Player:
         global playerName
         playerName = input("Please enter your name: ")
         return playerName
+
+    def Helper(self):
+        while(True):
+            text = input()
+            if text == "--help":
+                print("The computer will select a card at random, you as the player, need to guess whether the next drawn card is higher or lower than the selected card.  If your guess is correct, you will win a point, if you are incorrect, you will lose a point! Happy playing!")
+            elif text == "--resume":
+                break
 
     def drawCards(self):
         cardDeck = createDeck()
@@ -100,7 +110,6 @@ class Player:
             self.guessCard()
 
     def playGame(self):
-        os.system("cls")
         print(f"Your current score is {self.Score}")
         Player.drawCards()
         print(f"The current card is {card1[0]}")
@@ -110,11 +119,15 @@ class Player:
         replay = input(
             f"{playerName}, would you like to play again? Y/N: ").lower()
         if replay == "y":
+            os.system("cls")
             Player.drawCards()
-            self.playGame()
-        else:
+            Player.playGame()
+        elif replay == "n":
             print(
                 f"Thank you for playing, {playerName}! Your final score is {self.Score}")
+        else:
+            print("Please enter Y to play again, or N to exit")
+            Player.playAgain()
 
 
 Player = Player()
