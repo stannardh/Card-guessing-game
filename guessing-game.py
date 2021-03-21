@@ -28,8 +28,10 @@ def createDeck():
     random.shuffle(Deck)
     return Deck
 
+# checking to see if the cards print correctly and the list items can be accessed
 
-cardDeck = createDeck()
+
+""" cardDeck = createDeck()
 print(cardDeck)
 card1 = cardDeck.pop()
 card2 = cardDeck.pop()
@@ -38,14 +40,13 @@ print(card2)
 print(card1[0])
 print(card2[0])
 print(card1[1])
-print(card2[1])
+print(card2[1]) """
 
 
 class Player:
 
-    def __init__(self, Hand=[]):
-        self.Score = 10
-        self.Hand = Hand
+    def __init__(self):
+        self.Score = 0
 
     def setName(self):
         global playerName
@@ -56,46 +57,46 @@ class Player:
         cardDeck = createDeck()
         global card1
         global card2
-        card1 = [cardDeck.pop()]
-        card2 = [cardDeck.pop()]
+        card1 = cardDeck.pop()
+        card2 = cardDeck.pop()
 
     def loseRound(self):
         print("Nope!")
         print(f"The card was {card2[0]}")
-        self.playAgain()
-        discardPile.append([card1, card2])
         self.Score -= 1
+        discardPile.append([card1, card2])
+        self.playAgain()
 
     def winRound(self):
         print("Correct!")
         print(f"The card was {card2[0]}")
-        self.playAgain()
-        discardPile.append([card1, card2])
         self.Score += 1
+        discardPile.append([card1, card2])
+        self.playAgain()
 
     def drawRound(self):
         print("It 's a draw!")
         print(f"The card was {card2[0]}")
-        self.playAgain()
         discardPile.append([card1, card2])
+        self.playAgain()
 
     def guessCard(self):
         guessCard = input(
-            f"{playerName}, please guess higher or lower: ").lower()
-        if guessCard == "higher" and card1[1] > card2[1]:
+            f"{playerName}, please guess higher (h) or lower (l): ").lower()
+        if guessCard == "h" and card1[1] > card2[1]:
             self.loseRound()
-        elif guessCard == "lower" and card1[1] < card2[1]:
+        elif guessCard == "l" and card1[1] < card2[1]:
             self.loseRound()
-        elif guessCard == "higher" and card1[1] < card2[1]:
+        elif guessCard == "h" and card1[1] < card2[1]:
             self.winRound()
-        elif guessCard == "lower" and card1[1] > card2[1]:
+        elif guessCard == "l" and card1[1] > card2[1]:
             self.winRound()
-        elif guessCard == "lower" and card1[1] == card2[1]:
+        elif guessCard == "l" and card1[1] == card2[1]:
             self.drawRound()
-        elif guessCard == "higher" and card1[1] == card2[1]:
+        elif guessCard == "h" and card1[1] == card2[1]:
             self.drawRound()
         else:
-            print("Invalid response, please enter 'Higher' or 'Lower'")
+            print("Invalid response, please enter 'h' or 'l'")
             self.guessCard()
 
     def playGame(self):
