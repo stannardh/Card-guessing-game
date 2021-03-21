@@ -29,7 +29,8 @@ def createDeck():
     return Deck
 
 
-""" cardDeck = createDeck()
+cardDeck = createDeck()
+print(cardDeck)
 card1 = cardDeck.pop()
 card2 = cardDeck.pop()
 print(card1)
@@ -37,10 +38,11 @@ print(card2)
 print(card1[0])
 print(card2[0])
 print(card1[1])
-print(card2[1]) """
+print(card2[1])
 
 
 class Player:
+
     def __init__(self, Hand=[]):
         self.Score = 10
         self.Hand = Hand
