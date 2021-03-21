@@ -3,6 +3,7 @@ import os
 import instructions
 import argparse
 import sys
+import time
 
 Cards = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9",
          "10", "J", "Q", "K"]
@@ -126,7 +127,9 @@ class Player:
         elif replay == "n":
             print(
                 f"Thank you for playing, {playerName}! Your final score is {self.Score}")
-            sys.exit()
+            text = input("Press any key + ENTER to quit: ")
+            if text > 0:
+                sys.exit()
         else:
             print("Invalid Response. Please enter Y to play again, or N to exit")
             self.playAgain()
@@ -134,6 +137,4 @@ class Player:
 
 Player = Player()
 Player.setName()
-
-while (True):
-    Player.playGame()
+Player.playGame()
