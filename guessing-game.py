@@ -78,21 +78,19 @@ class Player:
         discardPile.append([card1, card2])
 
     def guessCard(self):
-        cardValue1 = card1[1]
-        cardValue2 = card2[1]
         guessCard = input(
             f"{playerName}, please guess higher or lower: ").lower()
-        if guessCard == "higher" and cardValue1 > cardValue2:
+        if guessCard == "higher" and card1[1] > card2[1]:
             self.loseRound()
-        elif guessCard == "lower" and cardValue1 < cardValue2:
+        elif guessCard == "lower" and card1[1] < card2[1]:
             self.loseRound()
-        elif guessCard == "higher" and cardValue1 < cardValue2:
+        elif guessCard == "higher" and card1[1] < card2[1]:
             self.winRound()
-        elif guessCard == "lower" and cardValue1 > cardValue2:
+        elif guessCard == "lower" and card1[1] > card2[1]:
             self.winRound()
-        elif guessCard == "lower" and cardValue1 == cardValue2:
+        elif guessCard == "lower" and card1[1] == card2[1]:
             self.drawRound()
-        elif guessCard == "higher" and cardValue1 == cardValue2:
+        elif guessCard == "higher" and card1[1] == card2[1]:
             self.drawRound()
         else:
             print("Invalid response, please enter 'Higher' or 'Lower'")
