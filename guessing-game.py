@@ -2,6 +2,7 @@ import random
 import os
 import instructions
 import argparse
+import sys
 
 Cards = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9",
          "10", "J", "Q", "K"]
@@ -125,8 +126,9 @@ class Player:
         elif replay == "n":
             print(
                 f"Thank you for playing, {playerName}! Your final score is {self.Score}")
+            sys.exit()
         else:
-            print("Please enter Y to play again, or N to exit")
+            print("Invalid Response. Please enter Y to play again, or N to exit")
             Player.playAgain()
 
 
