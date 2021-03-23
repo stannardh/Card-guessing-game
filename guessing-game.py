@@ -1,10 +1,8 @@
 import random
 import os
-import instructions
-import argparse
 import sys
 import time
-
+import argparse
 Cards = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9",
          "10", "J", "Q", "K"]
 
@@ -13,14 +11,6 @@ Suits = ["Clubs", "Hearts", "Diamonds", "Spades"]
 Deck = []
 
 discardPile = []
-
-
-""" def openHelp():
-    text = input()
-    if text == "--help":
-        parser = argparse.ArgumentParser(
-            description="The computer will select a card at random, you as the player, need to guess whether the next drawn card is higher or lower than the selected card.  If your guess is correct, you will win a point, if you are incorrect, you will lose a point! Happy playing!")
-        parser.print_help() """
 
 
 def createDeck():
@@ -57,14 +47,6 @@ class Player:
         playerName = input("Please enter your name: ")
         return playerName
 
-    def Helper(self):
-        while(True):
-            text = input()
-            if text == "--help":
-                print("The computer will select a card at random, you as the player, need to guess whether the next drawn card is higher or lower than the selected card.  If your guess is correct, you will win a point, if you are incorrect, you will lose a point! Happy playing!")
-            elif text == "--resume":
-                break
-
     def drawCards(self):
         cardDeck = createDeck()
         global card1
@@ -77,20 +59,23 @@ class Player:
         print(f"The card was {card2[0]}")
         self.Score -= 1
         discardPile.append([card1, card2])
-        self.playAgain()
+        time.sleep(2)
+        os.system("cls")
 
     def winRound(self):
         print("Correct!")
         print(f"The card was {card2[0]}")
         self.Score += 1
         discardPile.append([card1, card2])
-        self.playAgain()
+        time.sleep(2)
+        os.system("cls")
 
     def drawRound(self):
         print("It 's a draw!")
         print(f"The card was {card2[0]}")
         discardPile.append([card1, card2])
-        self.playAgain()
+        time.sleep(2)
+        os.system("cls")
 
     def guessCard(self):
         guessCard = input(
@@ -112,15 +97,21 @@ class Player:
             self.guessCard()
 
     def playGame(self):
-        print(f"Your current score is {self.Score}")
-        Player.drawCards()
-        print(f"The current card is {card1[0]}")
-        self.guessCard()
+        turn = 0
+        while turn < 10:
+            print(f"Your current score is {self.Score}")
+            Player.drawCards()
+            print(f"The current card is {card1[0]}")
+            self.guessCard()
+            turn += 1
+
+        self.playAgain()
 
     def playAgain(self):
         replay = input(
-            f"{playerName}, would you like to play again? Y/N: ").lower()
+            f"{playerName}, your final score is {self.Score}, would you like to play again? Y/N: ").lower()
         if replay == "y":
+            self.Score = 0
             os.system("cls")
             self.drawCards()
             self.playGame()
@@ -128,13 +119,29 @@ class Player:
             print(
                 f"Thank you for playing, {playerName}! Your final score is {self.Score}")
             text = input("Press any key + ENTER to quit: ")
-            if text > 0:
-                sys.exit()
+            for i in text:
+                if i > "0":
+                    return
         else:
             print("Invalid Response. Please enter Y to play again, or N to exit")
             self.playAgain()
+
+    def Helper(self):
+        instructions = "The computer will select a card at random, you as the player, need to guess whether the next drawn card is higher or lower than the selected card.\n" "If your guess is correct, you will win a point, if you are incorrect, you will lose a point!"
+
+        parser = argparse.ArgumentParser(description="How to Play")
+        parser.add_argument("--instructions", help="instructions")
+
+        args = parser.parse_args()
+
+        if args.instructions:
+            print(instructions)
+        else:
+            print("You're fine")
 
 
 Player = Player()
 Player.setName()
 Player.playGame()
+
+# figure out instructions
