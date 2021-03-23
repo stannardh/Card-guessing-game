@@ -13,6 +13,11 @@ Deck = []
 discardPile = []
 
 
+def clear_screen():
+    time.sleep(2)
+    os.system("cls")
+
+
 def createDeck():
     value = 1
     for card in Cards:
@@ -21,20 +26,6 @@ def createDeck():
         value = value + 1
     random.shuffle(Deck)
     return Deck
-
-# checking to see if the cards print correctly and the list items can be accessed
-
-
-""" cardDeck = createDeck()
-print(cardDeck)
-card1 = cardDeck.pop()
-card2 = cardDeck.pop()
-print(card1)
-print(card2)
-print(card1[0])
-print(card2[0])
-print(card1[1])
-print(card2[1]) """
 
 
 class Player:
@@ -45,7 +36,18 @@ class Player:
     def setName(self):
         global playerName
         playerName = input("Please enter your name: ")
-        return playerName
+        if playerName == "--help":
+            clear_screen()
+            print("RULES OF THE GAME\n")
+            time.sleep(1)
+            print("The computer will select a card at random, you as the player, need to guess whether the next drawn card is higher or lower than the selected card.\n" "If your guess is correct, you will win a point, if you are incorrect, you will lose a point!")
+            time.sleep(2)
+            resume_play = input("To continue playing type --resume ")
+            if resume_play == "--resume":
+                clear_screen()
+                self.setName()
+        else:
+            return playerName
 
     def drawCards(self):
         cardDeck = createDeck()
@@ -59,23 +61,20 @@ class Player:
         print(f"The card was {card2[0]}")
         self.Score -= 1
         discardPile.append([card1, card2])
-        time.sleep(2)
-        os.system("cls")
+        clear_screen()
 
     def winRound(self):
         print("Correct!")
         print(f"The card was {card2[0]}")
         self.Score += 1
         discardPile.append([card1, card2])
-        time.sleep(2)
-        os.system("cls")
+        clear_screen()
 
     def drawRound(self):
         print("It 's a draw!")
         print(f"The card was {card2[0]}")
         discardPile.append([card1, card2])
-        time.sleep(2)
-        os.system("cls")
+        clear_screen()
 
     def guessCard(self):
         guessCard = input(
@@ -92,6 +91,8 @@ class Player:
             self.drawRound()
         elif guessCard == "h" and card1[1] == card2[1]:
             self.drawRound()
+        elif guessCard == "--help":
+            self.instructions()
         else:
             print("Invalid response, please enter 'h' or 'l'")
             self.guessCard()
@@ -112,7 +113,7 @@ class Player:
             f"{playerName}, your final score is {self.Score}, would you like to play again? Y/N: ").lower()
         if replay == "y":
             self.Score = 0
-            os.system("cls")
+            clear_screen()
             self.drawCards()
             self.playGame()
         elif replay == "n":
@@ -122,26 +123,39 @@ class Player:
             for i in text:
                 if i > "0":
                     return
-        else:
-            print("Invalid Response. Please enter Y to play again, or N to exit")
-            self.playAgain()
+        elif replay == "--help":
+            clear_screen()
+            print("RULES OF THE GAME\n")
+            time.sleep(1)
+            print("The computer will select a card at random, you as the player, need to guess whether the next drawn card is higher or lower than the selected card.\n" "If your guess is correct, you will win a point, if you are incorrect, you will lose a point!")
+            time.sleep(2)
+            resume_play = input("To continue playing type --resume ")
+            if resume_play == "--resume":
+                clear_screen()
+                self.playAgain()
+            else:
+                print("Invalid Response. Please enter Y to play again, or N to exit")
+                self.playAgain()
 
-    def Helper(self):
-        instructions = "The computer will select a card at random, you as the player, need to guess whether the next drawn card is higher or lower than the selected card.\n" "If your guess is correct, you will win a point, if you are incorrect, you will lose a point!"
-
-        parser = argparse.ArgumentParser(description="How to Play")
-        parser.add_argument("--instructions", help="instructions")
-
-        args = parser.parse_args()
-
-        if args.instructions:
-            print(instructions)
-        else:
-            print("You're fine")
+    def instructions(self):
+        clear_screen()
+        print("RULES OF THE GAME\n")
+        time.sleep(1)
+        print("The computer will select a card at random, you as the player, need to guess whether the next drawn card is higher or lower than the selected card.\n" "If your guess is correct, you will win a point, if you are incorrect, you will lose a point!")
+        time.sleep(2)
+        resume_play = input("To continue playing type --resume ")
+        if resume_play == "--resume":
+            clear_screen()
+            print(f"{playerName}, your current score is {self.Score}")
+            print(f"The current card is {card1[0]}")
+            self.guessCard()
 
 
 Player = Player()
-Player.setName()
-Player.playGame()
+
+
+if __name__ == "__main__":
+    Player.setName()
+    Player.playGame()
 
 # figure out instructions
